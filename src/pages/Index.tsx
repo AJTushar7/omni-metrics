@@ -8,9 +8,13 @@ import { BudgetPerformance } from "@/components/dashboard/BudgetPerformance";
 import { ChannelOverview } from "@/components/dashboard/ChannelOverview";
 import { BSPComparison } from "@/components/dashboard/BSPComparison";
 import { HeatmapSection } from "@/components/dashboard/HeatmapSection";
-import { CampaignTable } from "@/components/dashboard/CampaignTable";
+// removed unused CampaignTable import
 import { Badge } from "@/components/ui/badge";
 import { BellRing, LineChart, MessageSquare, Plus } from "lucide-react";
+import { RealTimeMonitoring } from "@/components/dashboard/RealTimeMonitoring";
+import { CostOptimization } from "@/components/dashboard/CostOptimization";
+import { OrchestrationAnalysis } from "@/components/dashboard/OrchestrationAnalysis";
+import { FestivalTimeline } from "@/components/dashboard/FestivalTimeline";
 
 const Index = () => {
   return (
@@ -19,8 +23,13 @@ const Index = () => {
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Campaign Analytics Dashboard</h1>
-            <p className="text-sm text-muted-foreground">Multi-channel performance • Real-time tracking across SMS, WhatsApp, Email, Push & RCS</p>
+            <h1 className="text-3xl font-bold tracking-tight">Total Campaigns: 128</h1>
+            <div className="mt-2 flex flex-wrap items-center gap-2 text-sm">
+              <Badge variant="secondary" className="rounded-full">Active: 6</Badge>
+              <Badge variant="secondary" className="rounded-full">Scheduled: 12</Badge>
+              <Badge variant="secondary" className="rounded-full">Completed: 110</Badge>
+              <span className="text-muted-foreground">Last 15 days window</span>
+            </div>
             <div className="mt-2 inline-flex items-center gap-2 text-sm">
               <span className="inline-flex h-2 w-2 rounded-full bg-success" aria-hidden></span>
               <span className="text-muted-foreground">Live Updates Active</span>
@@ -63,31 +72,29 @@ const Index = () => {
           <KpiCard title="Avg Conversion Rate" value="10.7%" subtitle="from target" trendLabel="+3.2%" trendPositive />
         </div>
 
-        {/* Budget vs Performance */}
-        <BudgetPerformance />
+        {/* Budget vs Performance moved below */}
 
-        {/* Channel Overview */}
-        <div>
-          <div className="mb-3 flex items-center justify-between">
-            <h2 className="text-xl font-semibold">Channel Performance Snapshot</h2>
-            <Badge variant="secondary" className="rounded-full">Last 15 days</Badge>
+        {/* Channel Performance + Heatmap */}
+        <div className="grid gap-4 lg:grid-cols-2">
+          <div>
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-xl font-semibold">Channel Performance Snapshot</h2>
+              <Badge variant="secondary" className="rounded-full">Last 15 days</Badge>
+            </div>
+            <ChannelOverview />
           </div>
-          <ChannelOverview />
+          <HeatmapSection />
         </div>
 
-        {/* BSP Comparison */}
-        <BSPComparison />
 
-        {/* Heatmap + Campaign table */}
-        <div className="grid gap-4 lg:grid-cols-2">
-          <HeatmapSection />
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Campaign Performance Details</h2>
-              <Button variant="secondary"><BellRing className="mr-2 h-4 w-4" /> Export Report</Button>
-            </div>
-            <CampaignTable />
-          </div>
+        {/* Real-time Monitoring + Extended Sections */}
+        <div className="space-y-4">
+          <RealTimeMonitoring />
+          <CostOptimization />
+          <OrchestrationAnalysis />
+          <BSPComparison />
+          <FestivalTimeline />
+          <BudgetPerformance />
         </div>
 
         {/* Info strip */}

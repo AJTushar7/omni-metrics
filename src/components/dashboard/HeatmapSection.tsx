@@ -51,7 +51,11 @@ export const HeatmapSection = () => {
                   <td className="py-2 pr-2 text-muted-foreground">{d}</td>
                   {slots.map((_, j) => (
                     <td key={j} className="p-2">
-                      <div className={`h-6 w-12 rounded ${cellClass(intensities[i][j])}`}></div>
+                      <div className={`h-8 w-14 rounded flex items-center justify-center ${cellClass(intensities[i][j])}`}>
+                        <span className="text-[10px] font-medium text-foreground/80">
+                          {Math.round((intensities[i][j] / 5) * 100)}%
+                        </span>
+                      </div>
                     </td>
                   ))}
                 </tr>
