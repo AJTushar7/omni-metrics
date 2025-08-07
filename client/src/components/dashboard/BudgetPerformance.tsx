@@ -66,7 +66,7 @@ export const BudgetPerformance = () => {
               <SelectItem value="post">Post-Campaign</SelectItem>
             </SelectContent>
           </Select>
-          <Tabs value={viewMode} onValueChange={(v: ViewMode) => setViewMode(v)}>
+          <Tabs value={viewMode} onValueChange={(v) => setViewMode(v as ViewMode)}>
             <TabsList>
               <TabsTrigger value="performance">Performance</TabsTrigger>
               <TabsTrigger value="calculator">Calculator</TabsTrigger>
