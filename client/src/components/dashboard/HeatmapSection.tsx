@@ -37,79 +37,68 @@ export const HeatmapSection = () => {
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4">
         {/* Top Channel Performance Cards */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border">
-            <div className="text-lg font-semibold">WhatsApp</div>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="p-2 bg-orange-50 dark:bg-orange-950/20 rounded border">
+            <div className="font-semibold">WhatsApp</div>
             <div className="text-sm text-orange-600">68.5%</div>
             <div className="text-xs text-muted-foreground">Peak: Tue at 10 AM</div>
           </div>
-          <div className="p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border">
-            <div className="text-lg font-semibold">SMS</div>
+          <div className="p-2 bg-orange-50 dark:bg-orange-950/20 rounded border">
+            <div className="font-semibold">SMS</div>
             <div className="text-sm text-orange-600">54.2%</div>
             <div className="text-xs text-muted-foreground">Peak: Wed at 11 AM</div>
           </div>
         </div>
 
-        {/* Engagement Heatmap by Time */}
+        {/* Compact Heatmap */}
         <div>
-          <h4 className="font-medium mb-3">Engagement Heatmap by Time</h4>
-          <div className="grid grid-cols-5 gap-2 text-xs mb-3">
+          <h4 className="font-medium mb-2">Engagement Heatmap by Time</h4>
+          <div className="grid grid-cols-5 gap-1 text-xs mb-2">
             <div></div>
-            <div className="text-center font-medium">12 AM</div>
-            <div className="text-center font-medium">6 AM</div>
-            <div className="text-center font-medium">12 PM</div>
-            <div className="text-center font-medium">6 PM</div>
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => [
-              <div key={`${day}-label`} className="text-xs font-medium py-1">{day}</div>,
-              <div key={`${day}-12am`} className="h-6 bg-orange-100 rounded text-center text-xs leading-6">-</div>,
-              <div key={`${day}-6am`} className="h-6 bg-orange-100 rounded text-center text-xs leading-6">-</div>,
-              <div key={`${day}-12pm`} className="h-6 bg-orange-200 rounded text-center text-xs leading-6">-</div>,
-              <div key={`${day}-6pm`} className="h-6 bg-orange-300 rounded text-center text-xs leading-6">-</div>
+            <div className="text-center text-xs">12AM</div>
+            <div className="text-center text-xs">6AM</div>
+            <div className="text-center text-xs">12PM</div>
+            <div className="text-center text-xs">6PM</div>
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu'].map((day) => [
+              <div key={`${day}-label`} className="text-xs py-0.5">{day}</div>,
+              <div key={`${day}-12am`} className="h-4 bg-orange-100 rounded text-center text-xs leading-4">-</div>,
+              <div key={`${day}-6am`} className="h-4 bg-orange-100 rounded text-center text-xs leading-4">-</div>,
+              <div key={`${day}-12pm`} className="h-4 bg-orange-200 rounded text-center text-xs leading-4">-</div>,
+              <div key={`${day}-6pm`} className="h-4 bg-orange-300 rounded text-center text-xs leading-4">-</div>
             ])}
           </div>
-          <div className="flex items-center gap-4 text-xs">
+          <div className="flex items-center gap-3 text-xs">
             <div className="flex items-center gap-1">
-              <div className="w-3 h-3 bg-orange-100 rounded"></div>
+              <div className="w-2 h-2 bg-orange-100 rounded"></div>
               <span>Low</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-3 h-3 bg-orange-200 rounded"></div>
-              <span>Medium</span>
+              <div className="w-2 h-2 bg-orange-200 rounded"></div>
+              <span>Med</span>
             </div>
             <div className="flex items-center gap-1">
-              <div className="w-3 h-3 bg-orange-300 rounded"></div>
+              <div className="w-2 h-2 bg-orange-300 rounded"></div>
               <span>High</span>
             </div>
           </div>
         </div>
 
-        {/* Optimal Timing Recommendations */}
-        <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-5 h-5 rounded bg-blue-500 flex items-center justify-center text-white text-xs">💡</div>
-            <span className="font-medium text-blue-900 dark:text-blue-100">Optimal Timing Recommendations</span>
+        {/* Compact Recommendations */}
+        <div className="p-2 bg-blue-50 dark:bg-blue-950/20 rounded border border-blue-200">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-4 h-4 rounded bg-blue-500 flex items-center justify-center text-white text-xs">💡</div>
+            <span className="text-sm font-medium text-blue-900 dark:text-blue-100">Optimal Timing</span>
           </div>
-          <div className="grid grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-2 gap-2 text-xs">
             <div>
-              <div className="flex items-center gap-1 text-green-600 mb-1">
-                <TrendingUp className="h-3 w-3" />
-                <span className="font-medium">Best Times</span>
-              </div>
-              <p className="text-xs text-muted-foreground">Tuesday-Thursday 10-11 AM show 35% higher engagement</p>
+              <span className="text-green-600 font-medium">Best:</span> Tue-Thu 10-11 AM
             </div>
             <div>
-              <div className="flex items-center gap-1 text-orange-600 mb-1">
-                <Clock className="h-3 w-3" />
-                <span className="font-medium">Avoid Times</span>
-              </div>
-              <p className="text-xs text-muted-foreground">Late evenings (8-10 PM) show 60% lower conversion rates</p>
+              <span className="text-orange-600 font-medium">Avoid:</span> 8-10 PM
             </div>
           </div>
-          <Button variant="link" className="p-0 h-auto text-blue-600 text-sm mt-2">
-            Schedule Campaigns Optimally →
-          </Button>
         </div>
       </CardContent>
     </Card>

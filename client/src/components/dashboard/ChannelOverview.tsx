@@ -24,75 +24,111 @@ export const ChannelOverview = () => {
   }));
 
   return (
-    <Card className="h-[400px]">
-      <CardHeader className="pb-4">
+    <Card>
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5 text-blue-500" />
             Channel Performance
           </CardTitle>
-          <div className="flex gap-2">
+          <div className="flex gap-1">
             <Button 
               variant={activeMetric === 'delivery' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setActiveMetric('delivery')}
-              className="h-8"
+              className="h-7 text-xs"
             >
-              <Target className="h-3 w-3 mr-1" />
-              Delivery Rate
+              Delivery
             </Button>
             <Button 
               variant={activeMetric === 'engagement' ? 'default' : 'outline'}
               size="sm"
               onClick={() => setActiveMetric('engagement')}
-              className="h-8"
+              className="h-7 text-xs"
             >
-              <TrendingUp className="h-3 w-3 mr-1" />
-              Engagement Rate
+              Engagement
             </Button>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="h-[300px]">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-            <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-            <XAxis 
-              dataKey="name" 
-              tick={{ fontSize: 12 }}
-              axisLine={false}
-            />
-            <YAxis 
-              tick={{ fontSize: 12 }}
-              axisLine={false}
-              domain={[0, 100]}
-            />
-            <Tooltip 
-              content={({ active, payload, label }) => {
-                if (active && payload && payload[0]) {
-                  const data = payload[0].payload;
-                  return (
-                    <div className="bg-white dark:bg-gray-800 p-3 border rounded-lg shadow-lg">
-                      <p className="font-medium">{label}</p>
-                      <p className="text-blue-600">
-                        {activeMetric === 'delivery' ? 'Delivery Rate' : 'Engagement Rate'}: {payload[0].value}%
-                      </p>
-                      {data.recommended && (
-                        <Badge variant="secondary" className="mt-1">Recommended</Badge>
-                      )}
-                    </div>
-                  );
-                }
-                return null;
-              }}
-            />
-            <Bar 
-              dataKey="value" 
-              radius={[4, 4, 0, 0]}
-              fill="#8884d8"
-            />
-          </BarChart>
-        </ResponsiveContainer>
+      <CardContent>
+        {/* Performance Cards Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
+          {channels.slice(0, 6).map((channel) => (
+            <div key={channel.name} className="p-3 border rounded-lg bg-gray-50 dark:bg-gray-800">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2">
+                  <div 
+                    className="w-3 h-3 rounded" 
+                    style={{ backgroundColor: channel.color }}
+                  ></div>
+                  <span className="font-medium text-sm">{channel.name}</span>
+                </div>
+                {channel.recommended && (
+                  <Badge variant="secondary" className="text-xs h-5">Recommended</Badge>
+                )}
+              </div>
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">
+                    {activeMetric === 'delivery' ? 'Delivery' : 'Engagement'}
+                  </span>
+                  <span className="font-semibold">
+                    {activeMetric === 'delivery' ? channel.delivery : channel.engagement}%
+                  </span>
+                </div>
+                <div className="flex justify-between text-xs">
+                  <span className="text-muted-foreground">Cost/msg</span>
+                  <span className="font-semibold">₹{channel.cpm.toFixed(2)}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Compact Chart */}
+        <div className="h-[160px]">
+          <ResponsiveContainer width="100%" height="100%">
+            <BarChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fontSize: 10 }}
+                axisLine={false}
+              />
+              <YAxis 
+                tick={{ fontSize: 10 }}
+                axisLine={false}
+                domain={[0, 100]}
+                width={30}
+              />
+              <Tooltip 
+                content={({ active, payload, label }) => {
+                  if (active && payload && payload[0]) {
+                    const data = payload[0].payload;
+                    return (
+                      <div className="bg-white dark:bg-gray-800 p-2 border rounded shadow-lg">
+                        <p className="font-medium">{label}</p>
+                        <p className="text-blue-600">
+                          {activeMetric === 'delivery' ? 'Delivery Rate' : 'Engagement Rate'}: {payload[0].value}%
+                        </p>
+                        {data.recommended && (
+                          <Badge variant="secondary" className="mt-1">Recommended</Badge>
+                        )}
+                      </div>
+                    );
+                  }
+                  return null;
+                }}
+              />
+              <Bar 
+                dataKey="value" 
+                radius={[4, 4, 0, 0]}
+                fill="#8884d8"
+              />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </CardContent>
     </Card>
   );
