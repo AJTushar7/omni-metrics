@@ -5,11 +5,11 @@ const app = express();
 const port = 4201;
 
 // Serve Angular static files
-app.use(express.static(path.join(__dirname, 'angular-client/dist/angular-client')));
+app.use(express.static(path.join(__dirname, 'angular-client/dist/angular-client/browser')));
 
 // Handle Angular routing (SPA)
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'angular-client/dist/angular-client/index.html'));
+  res.sendFile(path.join(__dirname, 'angular-client/dist/angular-client/browser/index.html'));
 });
 
 app.listen(port, '0.0.0.0', () => {
