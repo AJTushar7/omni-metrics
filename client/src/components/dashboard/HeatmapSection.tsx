@@ -20,27 +20,30 @@ const getHeatmapColor = (value: number) => {
 
 export const HeatmapSection = () => {
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Peak Engagement Heatmap</CardTitle>
-        <div className="flex items-center gap-2">
+    <Card className="h-[400px]">
+      <CardHeader className="flex flex-row items-center justify-between pb-4">
+        <CardTitle className="flex items-center gap-2">
+          <div className="w-5 h-5 bg-gradient-to-r from-purple-500 to-pink-500 rounded"></div>
+          Peak Engagement Heatmap
+        </CardTitle>
+        <div className="flex items-center gap-3">
           <div className="flex items-center gap-1 text-xs">
-            <div className="w-3 h-3 bg-brand/20 rounded"></div>
-            <span>Low</span>
+            <div className="w-3 h-3 bg-purple-200 rounded"></div>
+            <span>Low (0-40%)</span>
           </div>
           <div className="flex items-center gap-1 text-xs">
-            <div className="w-3 h-3 bg-brand/60 rounded"></div>
-            <span>Medium</span>
+            <div className="w-3 h-3 bg-purple-400 rounded"></div>
+            <span>Medium (40-70%)</span>
           </div>
           <div className="flex items-center gap-1 text-xs">
-            <div className="w-3 h-3 bg-brand rounded"></div>
-            <span>High</span>
+            <div className="w-3 h-3 bg-purple-600 rounded"></div>
+            <span>High (70%+)</span>
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="h-[320px] overflow-auto">
         <div className="space-y-2">
-          <div className="grid grid-cols-8 gap-2 text-xs font-medium text-muted-foreground">
+          <div className="grid grid-cols-8 gap-2 text-xs font-medium text-muted-foreground sticky top-0 bg-background">
             <div></div>
             <div className="text-center">Mon</div>
             <div className="text-center">Tue</div>
@@ -60,7 +63,8 @@ export const HeatmapSection = () => {
                 return (
                   <div
                     key={day}
-                    className={`h-8 flex items-center justify-center text-xs font-medium rounded ${getHeatmapColor(value as number)}`}
+                    className={`h-8 flex items-center justify-center text-xs font-medium rounded transition-all hover:scale-105 cursor-pointer ${getHeatmapColor(value as number)}`}
+                    title={`${day.charAt(0).toUpperCase() + day.slice(1)} ${row.hour}: ${value}% engagement`}
                   >
                     {value}%
                   </div>
@@ -70,9 +74,9 @@ export const HeatmapSection = () => {
           ))}
         </div>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
-          <div className="rounded-lg border p-3">
-            <div className="text-sm font-medium">Best Times</div>
-            <div className="text-sm text-muted-foreground">Fri 6 PM shows 92% peak engagement</div>
+          <div className="rounded-lg border p-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950">
+            <div className="text-sm font-medium text-green-800 dark:text-green-200">🎯 Best Times</div>
+            <div className="text-sm text-green-600 dark:text-green-300">Friday 6 PM shows 92% peak engagement</div>
           </div>
           <div className="rounded-lg border p-3">
             <div className="text-sm font-medium">Avoid Times</div>

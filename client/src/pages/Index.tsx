@@ -17,7 +17,7 @@ import { CostOptimization } from "@/components/dashboard/CostOptimization";
 import { OrchestrationAnalysis } from "@/components/dashboard/OrchestrationAnalysis";
 import { FestivalTimeline } from "@/components/dashboard/FestivalTimeline";
 import { CampaignCalendar } from "@/components/dashboard/CampaignCalendar";
-import { InactiveCustomers } from "@/components/dashboard/InactiveCustomers";
+import { OptimizationInsights } from "@/components/dashboard/OptimizationInsights";
 
 const Index = () => {
   return (
@@ -90,28 +90,26 @@ const Index = () => {
 
         {/* Budget vs Performance moved below */}
 
+        {/* Optimization Insights Row */}
+        <OptimizationInsights />
+
         {/* Channel Performance + Heatmap */}
-        <div className="grid gap-4 lg:grid-cols-2">
-          <div>
-            <div className="mb-3 flex items-center justify-between">
-              <h2 className="text-xl font-semibold">Channel Performance Snapshot</h2>
-              <Badge variant="secondary" className="rounded-full">Last 15 days</Badge>
-            </div>
-            <ChannelOverview />
-          </div>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <ChannelOverview />
           <HeatmapSection />
         </div>
 
 
         {/* Real-time Monitoring + Extended Sections */}
-        <div className="space-y-4">
+        <div className="space-y-6">
           <RealTimeMonitoring />
           <CostOptimization />
           <OrchestrationAnalysis />
           <BSPComparison />
-          <FestivalTimeline />
-          <InactiveCustomers />
-          <BudgetPerformance />
+          <div className="grid gap-6 lg:grid-cols-2">
+            <FestivalTimeline />
+            <BudgetPerformance />
+          </div>
         </div>
 
         {/* Info strip */}

@@ -5,6 +5,8 @@ This is a full-stack campaign management and analytics dashboard application bui
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+Design preferences: Colorful, interactive dashboard with modern UI elements inspired by top tools like Adobe, Qlik, Salesforce, Google Looker.
+Dashboard layout: Compact sections with optimization insights, interactive charts, and consolidated information panels.
 
 # System Architecture
 
