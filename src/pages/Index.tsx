@@ -15,6 +15,8 @@ import { RealTimeMonitoring } from "@/components/dashboard/RealTimeMonitoring";
 import { CostOptimization } from "@/components/dashboard/CostOptimization";
 import { OrchestrationAnalysis } from "@/components/dashboard/OrchestrationAnalysis";
 import { FestivalTimeline } from "@/components/dashboard/FestivalTimeline";
+import { CampaignCalendar } from "@/components/dashboard/CampaignCalendar";
+import { InactiveCustomers } from "@/components/dashboard/InactiveCustomers";
 
 const Index = () => {
   return (
@@ -94,6 +96,8 @@ const Index = () => {
           <OrchestrationAnalysis />
           <BSPComparison />
           <FestivalTimeline />
+          <CampaignCalendar />
+          <InactiveCustomers />
           <BudgetPerformance />
         </div>
 
