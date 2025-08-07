@@ -72,6 +72,19 @@ The React to Angular migration has been completed with all major dashboard compo
 - [x] Build verification
 - [x] Documentation update
 
+## CURRENT BLOCKERS (Updated: 2025-08-07 18:05 UTC):
+- Angular dependencies not installed in angular-client/node_modules (all @angular/* packages missing)
+- TypeScript version conflict: need ~5.8.2, root project has 5.6.3
+- LSP errors in app.config.ts due to missing @angular/router
+- Cannot start ng serve due to missing @angular/build package
+- packager_tool installs to root, not angular-client directory
+
+## SOLUTIONS FOR NEXT SESSION:
+1. Use packager_tool to install @angular/build @angular/cli typescript@5.8.3
+2. Create separate workflow for angular app: ng serve --port 4201
+3. Fix LSP errors in app.config.ts after dependencies resolved
+4. Compare React vs Angular UIs side by side
+
 ## Critical Notes for Future Sessions:
 - Original React project structure preserved in `/client` directory
 - Angular project will be created in `/angular-client` directory

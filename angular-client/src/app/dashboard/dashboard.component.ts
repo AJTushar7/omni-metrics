@@ -40,23 +40,41 @@ import { type AlertItem } from '../models/campaign.interface';
     CostOptimizationComponent,
     FestivalTimelineComponent,
     OrchestrationAnalysisComponent,
-    HeatmapSectionComponent
+    HeatmapSectionComponent,
   ],
   template: `
     <div class="min-h-screen w-full bg-background">
-      <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+      <div
+        class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8"
+      >
         <!-- Header -->
-        <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div
+          class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
+        >
           <div>
-            <h1 class="text-3xl font-bold tracking-tight">Total Campaigns: 128</h1>
+            <h1 class="text-3xl font-bold tracking-tight">
+              Total Campaigns: 128
+            </h1>
             <div class="mt-2 flex flex-wrap items-center gap-2 text-sm">
-              <span class="inline-flex h-6 w-auto items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">Active: 6</span>
-              <span class="inline-flex h-6 w-auto items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">Scheduled: 12</span>
-              <span class="inline-flex h-6 w-auto items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground">Completed: 110</span>
+              <span
+                class="inline-flex h-6 w-auto items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground"
+                >Active: 6</span
+              >
+              <span
+                class="inline-flex h-6 w-auto items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground"
+                >Scheduled: 12</span
+              >
+              <span
+                class="inline-flex h-6 w-auto items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground"
+                >Completed: 112</span
+              >
               <span class="text-muted-foreground">Last 15 days window</span>
             </div>
             <div class="mt-2 inline-flex items-center gap-2 text-sm">
-              <span class="inline-flex h-2 w-2 rounded-full bg-success" aria-hidden></span>
+              <span
+                class="inline-flex h-2 w-2 rounded-full bg-success"
+                aria-hidden
+              ></span>
               <span class="text-muted-foreground">Live Updates Active</span>
             </div>
           </div>
@@ -85,35 +103,39 @@ import { type AlertItem } from '../models/campaign.interface';
 
         <!-- KPI cards -->
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <app-kpi-card 
-            title="Total Revenue" 
-            value="₹50.5L" 
-            subtitle="vs last month" 
-            trendLabel="+18.5%" 
+          <app-kpi-card
+            title="Total Revenue"
+            value="₹50.5L"
+            subtitle="vs last month"
+            trendLabel="+18.5%"
             [trendPositive]="true"
-            icon="trending_up">
+            icon="trending_up"
+          >
           </app-kpi-card>
-          <app-kpi-card 
-            title="Campaign ROI" 
-            value="6.0x" 
-            subtitle="improvement" 
-            trendLabel="+2.1x" 
-            [trendPositive]="true">
-          </app-kpi-card>
-          <app-kpi-card 
-            title="Messages Sent" 
-            value="4.8M" 
-            subtitle="Across all channels" 
-            trendLabel="+3.2%" 
+          <app-kpi-card
+            title="Campaign ROI"
+            value="6.0x"
+            subtitle="improvement"
+            trendLabel="+2.1x"
             [trendPositive]="true"
-            icon="message">
+          >
           </app-kpi-card>
-          <app-kpi-card 
-            title="Avg Conversion Rate" 
-            value="10.7%" 
-            subtitle="from target" 
-            trendLabel="+3.2%" 
-            [trendPositive]="true">
+          <app-kpi-card
+            title="Messages Sent"
+            value="4.8M"
+            subtitle="Across all channels"
+            trendLabel="+3.2%"
+            [trendPositive]="true"
+            icon="message"
+          >
+          </app-kpi-card>
+          <app-kpi-card
+            title="Avg Conversion Rate"
+            value="10.7%"
+            subtitle="from target"
+            trendLabel="+3.2%"
+            [trendPositive]="true"
+          >
           </app-kpi-card>
         </div>
 
@@ -151,25 +173,45 @@ import { type AlertItem } from '../models/campaign.interface';
         <!-- Footer -->
         <mat-card>
           <mat-card-content class="py-4 text-sm text-muted-foreground">
-            Tips: Use orchestration to set WhatsApp as primary with SMS fallback to reduce cost per conversion by up to 18%.
+            Tips: Use orchestration to set WhatsApp as primary with SMS fallback
+            to reduce cost per conversion by up to 18%.
           </mat-card-content>
         </mat-card>
 
         <div class="border-t border-border"></div>
-        <p class="text-center text-xs text-muted-foreground">Designed for large-scale automotive campaigns • Accessible • Keyboard-friendly</p>
+        <p class="text-center text-xs text-muted-foreground">
+          Designed for large-scale automotive campaigns • Accessible •
+          Keyboard-friendly
+        </p>
       </div>
     </div>
   `,
-  styles: [`
-    .mat-mdc-select {
-      width: 180px;
-    }
-  `]
+  styles: [
+    `
+      .mat-mdc-select {
+        width: 180px;
+      }
+    `,
+  ],
 })
 export class DashboardComponent {
   alertItems: AlertItem[] = [
-    { id: "1", text: "Service Reminder campaign is starting at 3:25 PM", type: "info", time: "in 10m" },
-    { id: "2", text: "Diwali Festival Sale just started execution", type: "success", time: "now" },
-    { id: "3", text: "RCS pilot paused due to high bounce rate. Review BSP.", type: "warning" },
+    {
+      id: '1',
+      text: 'Service Reminder campaign is starting at 3:25 PM',
+      type: 'info',
+      time: 'in 10m',
+    },
+    {
+      id: '2',
+      text: 'Diwali Festival Sale just started execution',
+      type: 'success',
+      time: 'now',
+    },
+    {
+      id: '3',
+      text: 'RCS pilot paused due to high bounce rate. Review BSP.',
+      type: 'warning',
+    },
   ];
 }
