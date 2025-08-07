@@ -53,32 +53,30 @@ export const ChannelOverview = () => {
       </CardHeader>
       <CardContent>
         {/* Performance Cards Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-4">
-          {channels.slice(0, 6).map((channel) => (
-            <div key={channel.name} className="p-3 border rounded-lg bg-gray-50 dark:bg-gray-800">
-              <div className="flex items-center justify-between mb-2">
-                <div className="flex items-center gap-2">
-                  <div 
-                    className="w-3 h-3 rounded" 
-                    style={{ backgroundColor: channel.color }}
-                  ></div>
-                  <span className="font-medium text-sm">{channel.name}</span>
-                </div>
+        <div className="grid grid-cols-5 gap-2 mb-4">
+          {channels.map((channel) => (
+            <div key={channel.name} className="p-2 border rounded bg-gray-50 dark:bg-gray-800 relative">
+              <div className="flex items-center gap-1 mb-1">
+                <div 
+                  className="w-2 h-2 rounded-full" 
+                  style={{ backgroundColor: channel.color }}
+                ></div>
+                <span className="font-medium text-xs">{channel.name}</span>
                 {channel.recommended && (
-                  <Badge variant="secondary" className="text-xs h-5">Recommended</Badge>
+                  <div className="w-1 h-1 bg-green-500 rounded-full"></div>
                 )}
               </div>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 <div className="flex justify-between text-xs">
                   <span className="text-muted-foreground">
-                    {activeMetric === 'delivery' ? 'Delivery' : 'Engagement'}
+                    {activeMetric === 'delivery' ? 'Del' : 'Eng'}
                   </span>
                   <span className="font-semibold">
                     {activeMetric === 'delivery' ? channel.delivery : channel.engagement}%
                   </span>
                 </div>
                 <div className="flex justify-between text-xs">
-                  <span className="text-muted-foreground">Cost/msg</span>
+                  <span className="text-muted-foreground">Cost</span>
                   <span className="font-semibold">₹{channel.cpm.toFixed(2)}</span>
                 </div>
               </div>
