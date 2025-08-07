@@ -99,10 +99,11 @@ const Index = () => {
           <HeatmapSection />
         </div>
 
+        {/* Real-time Monitoring */}
+        <RealTimeMonitoring />
 
-        {/* Real-time Monitoring + Extended Sections */}
+        {/* Extended Sections */}
         <div className="space-y-6">
-          <RealTimeMonitoring />
           <CostOptimization />
           <OrchestrationAnalysis />
           <BSPComparison />

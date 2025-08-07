@@ -23,23 +23,23 @@ const getHeatmapColor = (value: number) => {
 
 export const HeatmapSection = () => {
   return (
-    <Card className="h-[400px]">
+    <Card>
       <CardHeader className="pb-4">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
             <div className="w-5 h-5 rounded bg-orange-500 flex items-center justify-center text-white text-xs">⏱</div>
             Peak Engagement Heatmap
           </CardTitle>
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <Button variant="outline" size="sm" className="text-orange-600">Engagement</Button>
             <Button variant="ghost" size="sm">Conversion</Button>
             <Button variant="ghost" size="sm">Cost Efficiency</Button>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="h-[320px]">
+      <CardContent className="space-y-6">
         {/* Top Channel Performance Cards */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="grid grid-cols-2 gap-4">
           <div className="p-3 bg-orange-50 dark:bg-orange-950/20 rounded-lg border">
             <div className="text-lg font-semibold">WhatsApp</div>
             <div className="text-sm text-orange-600">68.5%</div>
@@ -53,32 +53,30 @@ export const HeatmapSection = () => {
         </div>
 
         {/* Engagement Heatmap by Time */}
-        <div className="mb-4">
+        <div>
           <h4 className="font-medium mb-3">Engagement Heatmap by Time</h4>
-          <div className="grid grid-cols-5 gap-2 text-xs">
+          <div className="grid grid-cols-5 gap-2 text-xs mb-3">
             <div></div>
             <div className="text-center font-medium">12 AM</div>
             <div className="text-center font-medium">6 AM</div>
             <div className="text-center font-medium">12 PM</div>
             <div className="text-center font-medium">6 PM</div>
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
-              <React.Fragment key={day}>
-                <div className="text-xs font-medium py-1">{day}</div>
-                <div className="h-6 bg-orange-100 rounded text-center text-xs leading-6">-</div>
-                <div className="h-6 bg-orange-100 rounded text-center text-xs leading-6">-</div>
-                <div className="h-6 bg-orange-200 rounded text-center text-xs leading-6">-</div>
-                <div className="h-6 bg-orange-300 rounded text-center text-xs leading-6">-</div>
-              </React.Fragment>
-            ))}
+            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => [
+              <div key={`${day}-label`} className="text-xs font-medium py-1">{day}</div>,
+              <div key={`${day}-12am`} className="h-6 bg-orange-100 rounded text-center text-xs leading-6">-</div>,
+              <div key={`${day}-6am`} className="h-6 bg-orange-100 rounded text-center text-xs leading-6">-</div>,
+              <div key={`${day}-12pm`} className="h-6 bg-orange-200 rounded text-center text-xs leading-6">-</div>,
+              <div key={`${day}-6pm`} className="h-6 bg-orange-300 rounded text-center text-xs leading-6">-</div>
+            ])}
           </div>
-          <div className="flex items-center gap-2 mt-3 text-xs">
+          <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-orange-100 rounded"></div>
               <span>Low</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-orange-200 rounded"></div>
-              <span className="mr-2">Medium</span>
+              <span>Medium</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-3 h-3 bg-orange-300 rounded"></div>
