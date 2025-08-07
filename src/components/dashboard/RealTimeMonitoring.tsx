@@ -51,6 +51,14 @@ export const RealTimeMonitoring = () => {
       <CardHeader className="flex items-center justify-between">
         <CardTitle>Real‑time Campaign Monitoring</CardTitle>
         <div className="flex items-center gap-2">
+          <Select defaultValue="15" onValueChange={(v: any) => console.log("Days filter:", v)}>
+            <SelectTrigger className="w-[120px]"><SelectValue placeholder="Period" /></SelectTrigger>
+            <SelectContent>
+              <SelectItem value="7">Last 7 days</SelectItem>
+              <SelectItem value="15">Last 15 days</SelectItem>
+              <SelectItem value="30">Last 30 days</SelectItem>
+            </SelectContent>
+          </Select>
           <Select defaultValue="all" onValueChange={(v: any) => setStatus(v)}>
             <SelectTrigger className="w-[160px]"><SelectValue placeholder="Status" /></SelectTrigger>
             <SelectContent>

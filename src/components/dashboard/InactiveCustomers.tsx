@@ -66,11 +66,37 @@ export const InactiveCustomers = () => {
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <UserX className="h-5 w-5 text-warning" />
-          Inactive Customer Management
+          Inactive Customers
         </CardTitle>
-        <div className="flex items-center gap-2">
+        <Badge variant="secondary" className="rounded-full">
+          {inactiveCustomers.length} inactive ({inactivityPeriod}+ days)
+        </Badge>
+      </CardHeader>
+      <CardContent>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <div className="rounded-lg border p-3">
+            <div className="flex items-center gap-2 mb-1">
+              <TrendingDown className="h-4 w-4 text-warning" />
+              <span className="text-sm font-medium">Inactivity Rate</span>
+            </div>
+            <div className="text-xl font-semibold">12.5%</div>
+            <div className="text-xs text-muted-foreground">vs last month +2.1%</div>
+          </div>
+          <div className="rounded-lg border p-3">
+            <div className="text-sm text-muted-foreground">Potential Savings</div>
+            <div className="text-xl font-semibold">₹2.8L</div>
+            <div className="text-xs text-muted-foreground">By excluding inactive users</div>
+          </div>
+          <div className="rounded-lg border p-3">
+            <div className="text-sm text-muted-foreground">Exclusion Lists</div>
+            <div className="text-xl font-semibold">{exclusionLists.length}</div>
+            <div className="text-xs text-muted-foreground">{exclusionLists.reduce((acc, list) => acc + list.count, 0).toLocaleString()} customers</div>
+          </div>
+        </div>
+        
+        <div className="mt-4 flex items-center gap-2">
           <Select value={inactivityPeriod} onValueChange={setInactivityPeriod}>
-            <SelectTrigger className="w-[150px]">
+            <SelectTrigger className="w-[120px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -80,203 +106,51 @@ export const InactiveCustomers = () => {
               <SelectItem value="180">180+ days</SelectItem>
             </SelectContent>
           </Select>
-          <Badge variant="secondary" className="rounded-full">
-            {inactiveCustomers.length} inactive customers
-          </Badge>
+          <Button 
+            variant="outline" 
+            size="sm"
+            disabled={selectedCustomers.length === 0}
+            onClick={createExclusionList}
+          >
+            <Trash2 className="mr-2 h-4 w-4" />
+            Create Exclusion ({selectedCustomers.length})
+          </Button>
+          <Button variant="outline" size="sm">
+            <Filter className="mr-2 h-4 w-4" />
+            Manage Lists
+          </Button>
         </div>
-      </CardHeader>
-      <CardContent>
-        <Tabs defaultValue="customers">
-          <TabsList>
-            <TabsTrigger value="customers">Inactive Customers</TabsTrigger>
-            <TabsTrigger value="exclusions">Exclusion Lists</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          </TabsList>
 
-          <TabsContent value="customers" className="space-y-4">
-            {/* Action Bar */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+        {/* Compact customer list */}
+        <div className="mt-4 space-y-2 max-h-48 overflow-y-auto">
+          {inactiveCustomers.slice(0, 5).map((customer) => (
+            <div key={customer.id} className="flex items-center justify-between p-2 border rounded">
+              <div className="flex items-center gap-3">
                 <Checkbox
-                  checked={selectedCustomers.length === inactiveCustomers.length}
-                  onCheckedChange={handleSelectAll}
+                  checked={selectedCustomers.includes(customer.id)}
+                  onCheckedChange={(checked) => handleSelectCustomer(customer.id, checked as boolean)}
                 />
-                <span className="text-sm text-muted-foreground">
-                  {selectedCustomers.length} of {inactiveCustomers.length} selected
-                </span>
+                <div>
+                  <div className="text-sm font-medium">{customer.name}</div>
+                  <div className="text-xs text-muted-foreground">{customer.email}</div>
+                </div>
               </div>
               <div className="flex items-center gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  disabled={selectedCustomers.length === 0}
-                  onClick={createExclusionList}
-                >
-                  <Trash2 className="mr-2 h-4 w-4" />
-                  Create Exclusion List
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Download className="mr-2 h-4 w-4" />
-                  Export
-                </Button>
+                <Badge variant="outline" className="rounded-full text-xs">
+                  {customer.channel}
+                </Badge>
+                <span className="text-xs text-muted-foreground">{customer.lastEngagement} ago</span>
               </div>
             </div>
-
-            {/* Customer Table */}
-            <div className="rounded-lg border">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="w-12"></TableHead>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Contact</TableHead>
-                    <TableHead>Last Engagement</TableHead>
-                    <TableHead>Segment</TableHead>
-                    <TableHead>Last Channel</TableHead>
-                    <TableHead>Reason</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {inactiveCustomers.map((customer) => (
-                    <TableRow key={customer.id}>
-                      <TableCell>
-                        <Checkbox
-                          checked={selectedCustomers.includes(customer.id)}
-                          onCheckedChange={(checked) => handleSelectCustomer(customer.id, checked as boolean)}
-                        />
-                      </TableCell>
-                      <TableCell>
-                        <div>
-                          <div className="font-medium">{customer.name}</div>
-                          <div className="text-xs text-muted-foreground">{customer.id}</div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <div className="text-sm">
-                          <div>{customer.email}</div>
-                          <div className="text-muted-foreground">{customer.phone}</div>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        <Badge 
-                          variant="secondary" 
-                          className={`rounded-full ${getInactivityBadgeColor(customer.lastEngagement)}`}
-                        >
-                          {customer.lastEngagement} ago
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="rounded-full">
-                          {customer.segment}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>{customer.channel}</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1">
-                          <AlertTriangle className="h-3 w-3 text-warning" />
-                          <span className="text-sm">{customer.reason}</span>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+          ))}
+          {inactiveCustomers.length > 5 && (
+            <div className="text-center py-2">
+              <Button variant="ghost" size="sm">
+                View all {inactiveCustomers.length} customers
+              </Button>
             </div>
-          </TabsContent>
-
-          <TabsContent value="exclusions" className="space-y-4">
-            <div className="grid gap-3">
-              {exclusionLists.map((list) => (
-                <div key={list.id} className="rounded-lg border p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="font-medium">{list.name}</div>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="secondary" className="rounded-full">
-                        {list.type}
-                      </Badge>
-                      <Button variant="outline" size="sm">Edit</Button>
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-sm">
-                    <div>
-                      <div className="text-muted-foreground">Customers</div>
-                      <div className="font-medium">{list.count.toLocaleString()}</div>
-                    </div>
-                    <div>
-                      <div className="text-muted-foreground">Created</div>
-                      <div className="font-medium">{list.created}</div>
-                    </div>
-                    <div>
-                      <div className="text-muted-foreground">Status</div>
-                      <div className="font-medium text-success">Active</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Create New Exclusion List
-            </Button>
-          </TabsContent>
-
-          <TabsContent value="analytics" className="space-y-4">
-            <div className="grid gap-4 sm:grid-cols-3">
-              <div className="rounded-lg border p-4">
-                <div className="flex items-center gap-2 mb-2">
-                  <TrendingDown className="h-4 w-4 text-warning" />
-                  <span className="text-sm font-medium">Inactivity Trend</span>
-                </div>
-                <div className="text-2xl font-semibold">+12%</div>
-                <div className="text-xs text-muted-foreground">vs last month</div>
-              </div>
-              <div className="rounded-lg border p-4">
-                <div className="text-sm text-muted-foreground">Potential Savings</div>
-                <div className="text-2xl font-semibold">₹2.8L</div>
-                <div className="text-xs text-muted-foreground">By excluding inactive customers</div>
-              </div>
-              <div className="rounded-lg border p-4">
-                <div className="text-sm text-muted-foreground">Re-engagement Rate</div>
-                <div className="text-2xl font-semibold">8.5%</div>
-                <div className="text-xs text-muted-foreground">From win-back campaigns</div>
-              </div>
-            </div>
-
-            <div className="space-y-3">
-              <div className="text-sm font-medium">Inactivity Breakdown by Channel</div>
-              <div className="space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">WhatsApp</span>
-                  <div className="flex items-center gap-2">
-                    <Progress value={35} className="w-20 h-2" />
-                    <span className="text-sm">35%</span>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">SMS</span>
-                  <div className="flex items-center gap-2">
-                    <Progress value={28} className="w-20 h-2" />
-                    <span className="text-sm">28%</span>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Email</span>
-                  <div className="flex items-center gap-2">
-                    <Progress value={22} className="w-20 h-2" />
-                    <span className="text-sm">22%</span>
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm">Push</span>
-                  <div className="flex items-center gap-2">
-                    <Progress value={15} className="w-20 h-2" />
-                    <span className="text-sm">15%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
+          )}
+        </div>
       </CardContent>
     </Card>
   );

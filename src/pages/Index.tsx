@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { KpiCard } from "@/components/dashboard/KpiCard";
 import { AlertsTicker } from "@/components/dashboard/AlertsTicker";
@@ -10,7 +11,7 @@ import { BSPComparison } from "@/components/dashboard/BSPComparison";
 import { HeatmapSection } from "@/components/dashboard/HeatmapSection";
 // removed unused CampaignTable import
 import { Badge } from "@/components/ui/badge";
-import { BellRing, LineChart, MessageSquare, Plus } from "lucide-react";
+import { BellRing, LineChart, MessageSquare, Plus, CalendarDays } from "lucide-react";
 import { RealTimeMonitoring } from "@/components/dashboard/RealTimeMonitoring";
 import { CostOptimization } from "@/components/dashboard/CostOptimization";
 import { OrchestrationAnalysis } from "@/components/dashboard/OrchestrationAnalysis";
@@ -38,6 +39,19 @@ const Index = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <CalendarDays className="mr-2 h-4 w-4" /> Calendar
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-4xl">
+                <DialogHeader>
+                  <DialogTitle>Campaign Calendar</DialogTitle>
+                </DialogHeader>
+                <CampaignCalendar />
+              </DialogContent>
+            </Dialog>
             <Select defaultValue="all">
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="All Channels" />
@@ -96,7 +110,6 @@ const Index = () => {
           <OrchestrationAnalysis />
           <BSPComparison />
           <FestivalTimeline />
-          <CampaignCalendar />
           <InactiveCustomers />
           <BudgetPerformance />
         </div>

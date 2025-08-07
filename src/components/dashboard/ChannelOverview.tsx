@@ -12,7 +12,7 @@ const channels = [
 
 export const ChannelOverview = () => {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3">{/* Fixed desktop layout */}
       {channels.map((c) => (
         <Card key={c.name}>
           <CardHeader className="pb-2">

@@ -1,76 +1,82 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const slots = ["12 AM", "6 AM", "12 PM", "6 PM"];
-
-const intensities: number[][] = [
-  [1, 2, 2, 1],
-  [2, 3, 4, 2],
-  [2, 4, 5, 3],
-  [1, 2, 3, 2],
-  [2, 3, 4, 5],
-  [1, 3, 5, 4],
-  [1, 2, 3, 2],
+const heatmapData = [
+  { hour: "6 AM", mon: 12, tue: 18, wed: 15, thu: 22, fri: 28, sat: 35, sun: 8 },
+  { hour: "9 AM", mon: 45, tue: 52, wed: 48, thu: 58, fri: 65, sat: 42, sun: 25 },
+  { hour: "12 PM", mon: 38, tue: 42, wed: 45, thu: 48, fri: 52, sat: 58, sun: 35 },
+  { hour: "3 PM", mon: 55, tue: 62, wed: 58, thu: 68, fri: 75, sat: 48, sun: 32 },
+  { hour: "6 PM", mon: 72, tue: 78, wed: 75, thu: 85, fri: 92, sat: 65, sun: 45 },
+  { hour: "9 PM", mon: 25, tue: 28, wed: 32, thu: 35, fri: 42, sat: 55, sun: 38 },
 ];
 
-const cellClass = (n: number) => {
-  switch (n) {
-    case 1: return "bg-primary/5";
-    case 2: return "bg-primary/10";
-    case 3: return "bg-primary/20";
-    case 4: return "bg-primary/30";
-    default: return "bg-primary/40";
-  }
+const getHeatmapColor = (value: number) => {
+  if (value >= 80) return "bg-brand text-white"; // High
+  if (value >= 60) return "bg-brand/80 text-white"; // Medium-high  
+  if (value >= 40) return "bg-brand/60 text-black"; // Medium
+  if (value >= 20) return "bg-brand/40 text-black"; // Medium-low
+  return "bg-brand/20 text-black"; // Low
 };
 
 export const HeatmapSection = () => {
   return (
     <Card>
-      <CardHeader className="flex items-center justify-between">
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Peak Engagement Heatmap</CardTitle>
-        <div className="flex gap-2">
-          <Badge variant="secondary" className="rounded-full">Engagement</Badge>
-          <Badge variant="secondary" className="rounded-full">Conversion</Badge>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 text-xs">
+            <div className="w-3 h-3 bg-brand/20 rounded"></div>
+            <span>Low</span>
+          </div>
+          <div className="flex items-center gap-1 text-xs">
+            <div className="w-3 h-3 bg-brand/60 rounded"></div>
+            <span>Medium</span>
+          </div>
+          <div className="flex items-center gap-1 text-xs">
+            <div className="w-3 h-3 bg-brand rounded"></div>
+            <span>High</span>
+          </div>
         </div>
       </CardHeader>
       <CardContent>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr>
-                <th className="text-left text-muted-foreground font-medium"></th>
-                {slots.map((t) => (
-                  <th key={t} className="text-left text-muted-foreground font-medium px-2 py-1">{t}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {days.map((d, i) => (
-                <tr key={d}>
-                  <td className="py-2 pr-2 text-muted-foreground">{d}</td>
-                  {slots.map((_, j) => (
-                    <td key={j} className="p-2">
-                      <div className={`h-8 w-14 rounded flex items-center justify-center ${cellClass(intensities[i][j])}`}>
-                        <span className="text-[10px] font-medium text-foreground/80">
-                          {Math.round((intensities[i][j] / 5) * 100)}%
-                        </span>
-                      </div>
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="space-y-2">
+          <div className="grid grid-cols-8 gap-2 text-xs font-medium text-muted-foreground">
+            <div></div>
+            <div className="text-center">Mon</div>
+            <div className="text-center">Tue</div>
+            <div className="text-center">Wed</div>
+            <div className="text-center">Thu</div>
+            <div className="text-center">Fri</div>
+            <div className="text-center">Sat</div>
+            <div className="text-center">Sun</div>
+          </div>
+          {heatmapData.map((row) => (
+            <div key={row.hour} className="grid grid-cols-8 gap-2">
+              <div className="text-xs text-muted-foreground font-medium py-2">
+                {row.hour}
+              </div>
+              {Object.entries(row).map(([day, value]) => {
+                if (day === "hour") return null;
+                return (
+                  <div
+                    key={day}
+                    className={`h-8 flex items-center justify-center text-xs font-medium rounded ${getHeatmapColor(value as number)}`}
+                  >
+                    {value}%
+                  </div>
+                );
+              })}
+            </div>
+          ))}
         </div>
         <div className="mt-4 grid gap-3 md:grid-cols-2">
           <div className="rounded-lg border p-3">
             <div className="text-sm font-medium">Best Times</div>
-            <div className="text-sm text-muted-foreground">Tue-Thu 10-11 AM show 35% higher engagement</div>
+            <div className="text-sm text-muted-foreground">Fri 6 PM shows 92% peak engagement</div>
           </div>
           <div className="rounded-lg border p-3">
             <div className="text-sm font-medium">Avoid Times</div>
-            <div className="text-sm text-muted-foreground">Late evenings (8-10 PM) show lower conversion rates</div>
+            <div className="text-sm text-muted-foreground">Early mornings show lower conversion rates</div>
           </div>
         </div>
       </CardContent>
