@@ -1,6 +1,10 @@
 # Overview
 
-This is a full-stack campaign management and analytics dashboard application built with React, Express.js, and TypeScript. The application appears to be designed for managing multi-channel marketing campaigns (WhatsApp, SMS, Email, RCS, Push notifications) with comprehensive analytics, real-time monitoring, and optimization features. It includes features like campaign orchestration, BSP (Business Service Provider) comparisons, cost optimization recommendations, and customer engagement tracking.
+This is a full-stack campaign management and analytics dashboard application with dual frontend implementations. The project includes both a React version (in `/client`) and a newly migrated Angular version (in `/angular-client`), sharing the same Express.js backend. The application is designed for managing multi-channel marketing campaigns (WhatsApp, SMS, Email, RCS, Push notifications) with comprehensive analytics, real-time monitoring, and optimization features. It includes features like campaign orchestration, BSP (Business Service Provider) comparisons, cost optimization recommendations, and customer engagement tracking.
+
+## Recent Migration: React to Angular
+**Completed:** January 8, 2025
+The entire React dashboard has been successfully migrated to Angular while maintaining identical UI and functionality. The Angular version includes all 11 major dashboard components converted from React equivalents with full feature parity.
 
 # User Preferences
 
@@ -11,12 +15,22 @@ Dashboard layout: Compact sections with optimization insights, interactive chart
 # System Architecture
 
 ## Frontend Architecture
+
+### React Version (/client)
 - **Framework**: React with TypeScript using Vite as the build tool
 - **UI Library**: Comprehensive component system using shadcn/ui components built on Radix UI primitives
 - **Styling**: Tailwind CSS with a custom design system supporting light/dark themes
 - **State Management**: TanStack React Query for server state management
 - **Routing**: Wouter for lightweight client-side routing
 - **Form Handling**: React Hook Form with Zod validation schemas
+
+### Angular Version (/angular-client)
+- **Framework**: Angular 20 with TypeScript and standalone components
+- **UI Library**: Angular Material with custom Tailwind CSS styling system
+- **Styling**: Tailwind CSS with HSL color variables and dark/light theme support
+- **State Management**: Angular Services with RxJS for reactive data management
+- **Routing**: Angular Router for navigation (when needed)
+- **Form Handling**: Angular Reactive Forms with validation
 
 ## Backend Architecture
 - **Runtime**: Node.js with Express.js server
