@@ -21,8 +21,8 @@ import { InactiveCustomers } from "@/components/dashboard/InactiveCustomers";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container py-10 space-y-8">
+    <div className="min-h-screen w-full bg-background">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
         {/* Header */}
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
