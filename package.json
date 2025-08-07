@@ -11,10 +11,13 @@
     "db:push": "drizzle-kit push"
   },
   "dependencies": {
+    "@angular/animations": "^20.1.6",
     "@angular/cdk": "^20.1.5",
     "@angular/cli": "^20.1.5",
     "@angular/forms": "^20.1.6",
     "@angular/material": "^20.1.5",
+    "@angular/platform-browser": "^20.1.6",
+    "@angular/platform-browser-dynamic": "^20.1.6",
     "@hookform/resolvers": "^3.10.0",
     "@jridgewell/trace-mapping": "^0.3.25",
     "@neondatabase/serverless": "^0.10.4",
