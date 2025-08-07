@@ -1,20 +1,38 @@
-const { spawn } = require('child_process');
-const path = require('path');
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// Change to angular-client directory and start the Angular dev server
-const angularPath = path.join(__dirname, 'angular-client');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-console.log('Starting Angular development server...');
+const app = express();
+const PORT = 4201;
 
-const ngServe = spawn('npx', ['ng', 'serve', '--port', '4201', '--host', '0.0.0.0'], {
-  cwd: angularPath,
-  stdio: 'inherit'
+// Enable CORS for all routes
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
 });
 
-ngServe.on('error', (err) => {
-  console.error('Failed to start Angular server:', err);
+// Serve static files from Angular build
+const staticPath = path.join(__dirname, 'angular-client', 'dist', 'angular-client', 'browser');
+app.use(express.static(staticPath));
+
+// Handle all routes - return the Angular index.html
+app.get('*', (req, res) => {
+  const indexPath = path.join(staticPath, 'index.html');
+  res.sendFile(indexPath);
 });
 
-ngServe.on('close', (code) => {
-  console.log(`Angular server process exited with code ${code}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Angular app is running on http://0.0.0.0:${PORT}`);
+  console.log(`Local access: http://localhost:${PORT}`);
+  console.log(`Network access: http://127.0.0.1:${PORT}`);
+});
+
+process.on('SIGINT', () => {
+  console.log('Angular server shutting down...');
+  process.exit(0);
 });
