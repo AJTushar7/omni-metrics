@@ -48,13 +48,14 @@ export const CostOptimization = () => {
         </Button>
       </CardHeader>
       <CardContent>
+        <p className="text-sm text-muted-foreground mb-4">Actionable recommendations to reduce spend and improve ROI, based on your last 30 days performance.</p>
         <div className="grid gap-4 md:grid-cols-4">
           {insights.map((insight, index) => (
-            <div key={index} className={`p-4 rounded-lg border ${
-              insight.status === 'success' ? 'bg-green-50 dark:bg-green-950/20' :
-              insight.status === 'warning' ? 'bg-yellow-50 dark:bg-yellow-950/20' :
-              insight.status === 'alert' ? 'bg-red-50 dark:bg-red-950/20' :
-              'bg-blue-50 dark:bg-blue-950/20'
+            <div key={index} className={`p-4 rounded-lg border bg-gradient-to-br ${
+              insight.status === 'success' ? 'from-green-400/10 to-green-600/10' :
+              insight.status === 'warning' ? 'from-yellow-400/10 to-yellow-600/10' :
+              insight.status === 'alert' ? 'from-red-400/10 to-red-600/10' :
+              'from-primary/5 to-accent/10'
             }`}>
               <div className="flex items-center gap-2 mb-2">
                 {insight.icon}

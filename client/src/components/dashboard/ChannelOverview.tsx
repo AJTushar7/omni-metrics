@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import { TrendingUp, Target } from "lucide-react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { TrendingUp } from "lucide-react";
 
 const channels = [
   { name: "WhatsApp", delivery: 97.8, engagement: 82.1, cpm: 0.08, color: "#25D366", recommended: true },
@@ -28,7 +28,7 @@ export const ChannelOverview = () => {
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5 text-blue-500" />
+            <TrendingUp className="h-5 w-5 text-primary" />
             Channel Performance
           </CardTitle>
           <div className="flex gap-1">
@@ -122,8 +122,11 @@ export const ChannelOverview = () => {
               <Bar 
                 dataKey="value" 
                 radius={[4, 4, 0, 0]}
-                fill="#8884d8"
-              />
+              >
+                {chartData.map((d, idx) => (
+                  <Cell key={`cell-${d.name}`} fill={`hsl(var(--chart-${(idx % 5) + 1}))`} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>

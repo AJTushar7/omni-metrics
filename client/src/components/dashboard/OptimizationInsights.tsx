@@ -59,11 +59,11 @@ export const OptimizationInsights = () => {
         <p className="text-sm text-muted-foreground">Smart recommendations to maximize campaign performance</p>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        <div className="flex gap-3 overflow-x-auto pb-1 snap-x">
           {insights.map((insight, index) => (
-            <div key={index} className="p-4 border rounded-lg bg-gray-50 dark:bg-gray-800 hover:shadow-sm transition-shadow">
+            <div key={index} className="min-w-[220px] snap-start p-4 border rounded-lg bg-gradient-to-br from-primary/10 via-accent/10 to-secondary/10 hover:shadow-md transition-shadow">
               <div className="flex items-center gap-2 mb-3">
-                <div className="p-1.5 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600">
+                <div className="p-1.5 rounded bg-primary/15 text-primary">
                   {insight.icon}
                 </div>
                 <Badge variant="secondary" className="text-xs">
@@ -72,11 +72,9 @@ export const OptimizationInsights = () => {
               </div>
               <h3 className="font-semibold text-sm mb-2 leading-tight">{insight.title}</h3>
               <p className="text-xs text-muted-foreground mb-3">{insight.description}</p>
-              <div className="space-y-2">
-                <p className="text-sm font-medium text-green-600">{insight.impact}</p>
-                <Button variant="outline" size="sm" className="w-full h-7 text-xs">
-                  Apply Insight
-                </Button>
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-primary">{insight.impact}</p>
+                <Button variant="outline" size="sm" className="h-7 text-xs">Apply</Button>
               </div>
             </div>
           ))}

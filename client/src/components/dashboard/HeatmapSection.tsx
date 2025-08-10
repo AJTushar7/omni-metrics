@@ -1,8 +1,6 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, Clock } from "lucide-react";
 
 const heatmapData = [
   { hour: "6 AM", mon: 12, tue: 18, wed: 15, thu: 22, fri: 28, sat: 35, sun: 8 },
@@ -14,90 +12,54 @@ const heatmapData = [
 ];
 
 const getHeatmapColor = (value: number) => {
-  if (value >= 80) return "bg-brand text-white"; // High
-  if (value >= 60) return "bg-brand/80 text-white"; // Medium-high  
-  if (value >= 40) return "bg-brand/60 text-black"; // Medium
-  if (value >= 20) return "bg-brand/40 text-black"; // Medium-low
-  return "bg-brand/20 text-black"; // Low
+  if (value >= 80) return "bg-primary/95 text-primary-foreground";
+  if (value >= 60) return "bg-primary/70 text-primary-foreground";  
+  if (value >= 40) return "bg-primary/50 text-foreground"; 
+  if (value >= 20) return "bg-primary/30 text-foreground"; 
+  return "bg-primary/15 text-foreground"; 
 };
 
 export const HeatmapSection = () => {
   return (
     <Card>
-      <CardHeader className="pb-4">
+      <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded bg-orange-500 flex items-center justify-center text-white text-xs">⏱</div>
+            <div className="w-5 h-5 rounded bg-primary text-primary-foreground flex items-center justify-center text-[10px]">⏱</div>
             Peak Engagement Heatmap
           </CardTitle>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm" className="text-orange-600">Engagement</Button>
+            <Button variant="outline" size="sm">Engagement</Button>
             <Button variant="ghost" size="sm">Conversion</Button>
             <Button variant="ghost" size="sm">Cost Efficiency</Button>
           </div>
         </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Top Channel Performance Cards */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="p-2 bg-orange-50 dark:bg-orange-950/20 rounded border">
-            <div className="font-semibold">WhatsApp</div>
-            <div className="text-sm text-orange-600">68.5%</div>
-            <div className="text-xs text-muted-foreground">Peak: Tue at 10 AM</div>
-          </div>
-          <div className="p-2 bg-orange-50 dark:bg-orange-950/20 rounded border">
-            <div className="font-semibold">SMS</div>
-            <div className="text-sm text-orange-600">54.2%</div>
-            <div className="text-xs text-muted-foreground">Peak: Wed at 11 AM</div>
-          </div>
-        </div>
-
-        {/* Compact Heatmap */}
+      <CardContent>
         <div>
-          <h4 className="font-medium mb-2">Engagement Heatmap by Time</h4>
-          <div className="grid grid-cols-5 gap-1 text-xs mb-2">
+          <div className="grid grid-cols-8 gap-1 text-[10px]">
             <div></div>
-            <div className="text-center text-xs">12AM</div>
-            <div className="text-center text-xs">6AM</div>
-            <div className="text-center text-xs">12PM</div>
-            <div className="text-center text-xs">6PM</div>
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu'].map((day) => [
-              <div key={`${day}-label`} className="text-xs py-0.5">{day}</div>,
-              <div key={`${day}-12am`} className="h-4 bg-orange-100 rounded text-center text-xs leading-4">-</div>,
-              <div key={`${day}-6am`} className="h-4 bg-orange-100 rounded text-center text-xs leading-4">-</div>,
-              <div key={`${day}-12pm`} className="h-4 bg-orange-200 rounded text-center text-xs leading-4">-</div>,
-              <div key={`${day}-6pm`} className="h-4 bg-orange-300 rounded text-center text-xs leading-4">-</div>
-            ])}
+            {["Mon","Tue","Wed","Thu","Fri","Sat","Sun"].map((d) => (
+              <div key={`h-${d}`} className="text-center">{d}</div>
+            ))}
+            {heatmapData.map((row) => (
+              <React.Fragment key={row.hour}>
+                <div className="text-xs py-0.5">{row.hour}</div>
+                {["mon","tue","wed","thu","fri","sat","sun"].map((day) => {
+                  const val = (row as any)[day] as number;
+                  return (
+                    <div key={`${row.hour}-${day}`} className={`h-5 rounded ${getHeatmapColor(val)} text-[10px] leading-5 text-center`}>
+                      {val}%
+                    </div>
+                  );
+                })}
+              </React.Fragment>
+            ))}
           </div>
-          <div className="flex items-center gap-3 text-xs">
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-orange-100 rounded"></div>
-              <span>Low</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-orange-200 rounded"></div>
-              <span>Med</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <div className="w-2 h-2 bg-orange-300 rounded"></div>
-              <span>High</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Compact Recommendations */}
-        <div className="p-2 bg-blue-50 dark:bg-blue-950/20 rounded border border-blue-200">
-          <div className="flex items-center gap-2 mb-1">
-            <div className="w-4 h-4 rounded bg-blue-500 flex items-center justify-center text-white text-xs">💡</div>
-            <span className="text-sm font-medium text-blue-900 dark:text-blue-100">Optimal Timing</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div>
-              <span className="text-green-600 font-medium">Best:</span> Tue-Thu 10-11 AM
-            </div>
-            <div>
-              <span className="text-orange-600 font-medium">Avoid:</span> 8-10 PM
-            </div>
+          <div className="mt-2 flex items-center justify-between text-xs">
+            <span className="text-muted-foreground">Low</span>
+            <div className="flex-1 mx-2 h-1.5 rounded bg-gradient-to-r from-primary/15 via-primary/60 to-primary" />
+            <span className="text-muted-foreground">High</span>
           </div>
         </div>
       </CardContent>

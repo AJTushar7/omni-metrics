@@ -18,6 +18,7 @@ import { OrchestrationAnalysis } from "@/components/dashboard/OrchestrationAnaly
 import { FestivalTimeline } from "@/components/dashboard/FestivalTimeline";
 import { CampaignCalendar } from "@/components/dashboard/CampaignCalendar";
 import { OptimizationInsights } from "@/components/dashboard/OptimizationInsights";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Index = () => {
   return (
@@ -40,11 +41,18 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-3">
             <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  <CalendarDays className="mr-2 h-4 w-4" /> Calendar
-                </Button>
-              </DialogTrigger>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <DialogTrigger asChild>
+                      <Button variant="ghost" size="icon" aria-label="Open calendar">
+                        <CalendarDays className="h-5 w-5" />
+                      </Button>
+                    </DialogTrigger>
+                  </TooltipTrigger>
+                  <TooltipContent>Open calendar</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
               <DialogContent className="max-w-4xl">
                 <DialogHeader>
                   <DialogTitle>Campaign Calendar</DialogTitle>
